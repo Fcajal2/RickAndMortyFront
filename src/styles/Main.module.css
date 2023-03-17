@@ -1,0 +1,25 @@
+.gridcontainer {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  list-style: none;
+}
+
+@media (max-width: 760px) {
+  .gridcontainer {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    list-style: none;
+  }
+}
+
+.title {
+  text-decoration: none;
+  color: black;
+  align-self: center;
+  display: flex;
+}
+
+.title h1 {
+  text-align: center;
+  text-decoration: none;
+}
