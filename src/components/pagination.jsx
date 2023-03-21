@@ -26,8 +26,11 @@ export default function Pagination({ page, updatePage, info }) {
   return (
     <>
       <button onClick={handleFirst}>First</button>
-      <button onClick={handlePrev}>Prev</button>
-      <button onClick={handleNext}>Next</button>
+      <button onClick={handlePrev}>{"<<"}</button>
+      <button onClick={handlePrev}>{page-1}</button>
+      <button>{page}</button>
+      <button onClick={handleNext}>{page + 1}</button>
+      <button onClick={handleNext}>{">>"}</button>
       <button onClick={handleLast}>Last</button>
     </>
   );

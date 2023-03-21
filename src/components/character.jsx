@@ -17,13 +17,13 @@ export default function CharacterTile({ endpoint }) {
   return (
     <>
       {info ? (
-        <li key={info.id} /* className={styles.card} */>
+        <li key={info.id}>
           <Link href="/character/[id]" as={`/character/${info.id}`}>
             <img src={info.image} alt={`${info.name} Thumb`} />
-            <h3>
-              {info.name} - {info.status}
-            </h3>
           </Link>
+          <h3>
+            {info.name} - {info.status}
+          </h3>
         </li>
       ) : (
         <h3>Loading...</h3>

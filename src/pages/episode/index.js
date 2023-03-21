@@ -1,8 +1,10 @@
 import Head from "next/head";
-import styles from "@/styles/Main.module.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Pagination from "@/components/pagination";
+import Search from "@/components/search";
+import styles from "../../styles/Main.module.css";
+import Navbar from "@/components/navbar";
 
 const defaultEndpoint = "https://rickandmortyapi.com/api/episode/";
 
@@ -23,31 +25,17 @@ export default function Home({ data }) {
   const [results, updateResults] = useState(defaultResults);
   const [info, updateInfo] = useState(defaultInfo);
   const [page, updatePage] = useState(1);
-  const [filter, updateFilter] = useState();
+  const [search, setSearch] = useState();
 
   useEffect(() => {
     async function request() {
-      const res = await fetch(
-        `${defaultEndpoint}?page=${page}&name=${filter ?? ""}`
-      );
+      const res = await fetch(`${defaultEndpoint}?page=${page}${search ?? ""}`);
       const nextData = await res.json();
       updateInfo(nextData.info);
       updateResults(nextData.results);
     }
     request();
-  }, [page, filter]);
-
-  function handleOnSumbitSearch(e) {
-    e.preventDefault();
-
-    const { currentTarget = {} } = e;
-    const fields = Array.from(currentTarget?.elements);
-    const fieldQuery = fields.find((field) => field.name === "query");
-
-    const value = fieldQuery.value || "";
-    updateFilter(value);
-    updatePage(1);
-  }
+  }, [page, search]);
 
   return (
     <>
@@ -56,22 +44,17 @@ export default function Home({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Link href="/" as={`/`} className={styles.title}>
-          <h1 className={styles.title}>Rick and morty Wiki</h1>
-        </Link>
-        <p /* className={styles.description} */>Episodes</p>
+        <Navbar />
+        <p>Episodes</p>
 
-        <form /* className={styles.search} */ onSubmit={handleOnSumbitSearch}>
-          <input type="search" name="query" />
-          <button>Search</button>
-        </form>
+        <Search setSearch={setSearch} updatePage={updatePage} />
 
         {results ? (
-          <ul className={styles.gridcontainer}>
+          <ul className={styles.character_tiles}>
             {results.map((result) => {
               const { id, name, episode } = result;
               return (
-                <li key={id} /* className={styles.card} */>
+                <li key={id}>
                   <Link href="/episode/[id]" as={`/episode/${id}`}>
                     <h3>{name}</h3>
                     <h5>{episode}</h5>

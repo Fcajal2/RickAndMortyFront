@@ -1,17 +1,19 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Pagination from "@/components/pagination";
-import Search from "@/components/search";
+import Pagination from "../../components/pagination";
+import Search from "../../components/search";
 import styles from "../../styles/Main.module.css";
-import Navbar from "@/components/navbar";
+import Filter from "../../components/filter";
+import Navbar from "../../components/navbar";
+import { GetServerSideProps } from "next/types";
 
-const defaultEndpoint = "https://rickandmortyapi.com/api/location/";
+const defaultEndpoint: string = "https://rickandmortyapi.com/api/character/";
 
 export async function getServerSideProps() {
   //fetching data
   const res = await fetch(defaultEndpoint);
-  const data = await res.json();
+  const data: Data = await res.json();
   //send fetched data to the page compenent via props
   return {
     props: {
@@ -26,47 +28,49 @@ export default function Home({ data }) {
   const [info, updateInfo] = useState(defaultInfo);
   const [page, updatePage] = useState(1);
   const [search, setSearch] = useState();
+  const [filter, setFilter] = useState();
 
   useEffect(() => {
     async function request() {
-      const res = await fetch(`${defaultEndpoint}?page=${page}${search ?? ""}`);
-      const nextData = await res.json();
+      const res = await fetch(
+        `${defaultEndpoint}?page=${page}${search ?? ""}${filter ?? ""}`
+      );
+      const nextData = await res.json() as Data;
       updateInfo(nextData.info);
       updateResults(nextData.results);
     }
     request();
-  }, [page, search]);
+  }, [page, search, filter]);
 
   return (
     <>
       <Head>
-        <title>R&M Locations</title>
+        <title>R&M Characters</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         <Navbar />
-        <p>Locations</p>
+        <p>Characters</p>
 
         <Search setSearch={setSearch} updatePage={updatePage} />
+        <Filter setFilter={setFilter} updatePage={updatePage} />
 
         {results ? (
           <ul className={styles.character_tiles}>
             {results.map((result) => {
-              const { id, name, type, dimension } = result;
+              const { id, name, image, status } = result;
               return (
-                <li key={id}>
-                  <Link href="/location/[id]" as={`/location/${id}`}>
-                    <h3>{name}</h3>
+                <li key={id} className={`${styles.filterDiv} ${status}`}>
+                  <Link href="/character/[id]" as={`/character/${id}`}>
+                    <img src={image} alt={`${name} Thumb`} />
                   </Link>
-                  <h5>
-                    {type} - {dimension}
-                  </h5>
+                  <h3>{name}</h3>
                 </li>
               );
             })}
           </ul>
         ) : (
-          <h1>No Locations Found</h1>
+          <h1>No Characters Found</h1>
         )}
 
         <Pagination page={page} updatePage={updatePage} info={info} />

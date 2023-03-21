@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "@/styles/Main.module.css";
 import CharacterTile from "@/components/character";
+import styles from "../../../styles/Main.module.css";
+import Navbar from "@/components/navbar";
 
 const defaultEndpoint = "https://rickandmortyapi.com/api/episode/";
 
@@ -19,39 +20,34 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function Location({ data }) {
-  //const { name, image, gender, location, origin, species, status } = data;
-  const name = data.name;
-  const air_date = data.air_date;
-  const episode = data.episode;
-  const characters = data.characters;
-
   return (
     <>
       <Head>
-        <title>{name}</title>
+        <title>{data.name}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 /* className={styles.title} */>{name}</h1>
+        <Navbar />
+        <h1>{data.name}</h1>
 
-        <div /* className={styles.profile} */>
-          <div /* className={styles.profile-details} */>
+        <div>
+          <div>
             <h2>Episode Details</h2>
             <ul>
               <li>
-                <strong>Name:</strong> {name} - {episode}
+                <strong>Name:</strong> {data.name} - {data.episode}
               </li>
               <li>
-                <strong>Air Date:</strong> {air_date}
+                <strong>Air Date:</strong> {data.air_date}
               </li>
             </ul>
           </div>
           <div>
-            {characters.length ? (
+            {data.characters.length ? (
               <div>
                 <h1>Characters</h1>
-                <ul className={styles.gridcontainer}>
-                  {characters.map((character) => {
+                <ul className={styles.character_tiles}>
+                  {data.characters.map((character) => {
                     return <CharacterTile endpoint={character} />;
                   })}
                 </ul>
@@ -62,9 +58,7 @@ export default function Location({ data }) {
           </div>
         </div>
         <p>
-          <Link href="/episode" /* className={styles.back} */>
-            Back to All Episodes
-          </Link>
+          <Link href="/episode">Back to All Episodes</Link>
         </p>
       </main>
     </>

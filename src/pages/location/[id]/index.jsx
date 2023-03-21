@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "@/styles/Main.module.css";
 import CharacterTile from "@/components/character";
+import styles from "../../../styles/Main.module.css";
+import Navbar from "@/components/navbar";
 
 const defaultEndpoint = "https://rickandmortyapi.com/api/location/";
 
@@ -19,42 +20,37 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function Location({ data }) {
-  //const { name, image, gender, location, origin, species, status } = data;
-  const name = data.name;
-  const type = data.type;
-  const dimension = data.dimension;
-  const residents = data.residents;
-
   return (
     <>
       <Head>
-        <title>{name}</title>
+        <title>{data.name}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 /* className={styles.title} */>{name}</h1>
+        <Navbar />
+        <h1>{data.name}</h1>
 
-        <div /* className={styles.profile} */>
-          <div /* className={styles.profile-details} */>
+        <div>
+          <div>
             <h2>Location Details</h2>
             <ul>
               <li>
-                <strong>Name:</strong> {name}
+                <strong>Name:</strong> {data.name}
               </li>
               <li>
-                <strong>Type:</strong> {type}
+                <strong>Type:</strong> {data.type}
               </li>
               <li>
-                <strong>Dimension:</strong> {dimension}
+                <strong>Dimension:</strong> {data.dimension}
               </li>
             </ul>
           </div>
           <div>
-            {residents.length ? (
+            {data.residents.length ? (
               <div>
                 <h1>Current Residents</h1>
-                <ul className={styles.gridcontainer}>
-                  {residents.map((resident) => {
+                <ul className={styles.character_tiles}>
+                  {data.residents.map((resident) => {
                     return <CharacterTile endpoint={resident} />;
                   })}
                 </ul>
@@ -65,9 +61,7 @@ export default function Location({ data }) {
           </div>
         </div>
         <p>
-          <Link href="/location" /* className={styles.back} */>
-            Back to All Locations
-          </Link>
+          <Link href="/location">Back to All Locations</Link>
         </p>
       </main>
     </>

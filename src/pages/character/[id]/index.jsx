@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "@/styles/Main.module.css";
 import EpisodeList from "@/components/episodes";
+import styles from "../../../styles/Main.module.css";
+import Navbar from "@/components/navbar";
 
 const defaultEndpoint = "https://rickandmortyapi.com/api/character/";
 
@@ -26,16 +27,14 @@ export default function Charater({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Link href="/" as={`/`} className={styles.title}>
-          <h1 className={styles.title}>Rick and morty Wiki</h1>
-        </Link>
-        <h1 /* className={styles.title} */>{data.name}</h1>
+      <Navbar />
+        <h1>{data.name}</h1>
 
-        <div /* className={styles.profile} */>
-          <div /* className={styles.profileimage} */>
+        <div>
+          <div>
             <img src={data.image} alt={data.name} />
           </div>
-          <div /* className={styles.profile-details} */>
+          <div>
             <h2>Character Details</h2>
             <ul>
               <li>
@@ -73,7 +72,7 @@ export default function Charater({ data }) {
               {data.episode.length ? (
                 <div>
                   <h1>Episode Appearances</h1>
-                  <ul className={styles.gridcontainer}>
+                  <ul className={styles.character_tiles}>
                     {data.episode.map((episode) => {
                       return <EpisodeList endpoint={episode} />;
                     })}
@@ -86,9 +85,7 @@ export default function Charater({ data }) {
           </div>
         </div>
         <p>
-          <Link href="/character" /* className={styles.back} */>
-            Back to All Characters
-          </Link>
+          <Link href="/character">Back to All Characters</Link>
         </p>
       </main>
     </>

@@ -17,7 +17,7 @@ export default function EpisodeList({ endpoint }) {
   return (
     <>
       {info ? (
-        <li key={info.id} /* className={styles.card} */>
+        <li key={info.id}>
           <Link href="/episode/[id]" as={`/episode/${info.id}`}>
             <h4>
               {info.name} - {info.episode}
