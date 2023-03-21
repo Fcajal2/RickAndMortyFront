@@ -2,7 +2,7 @@ export default function Filter({ setFilter, updatePage }) {
   function handleFilter(query) {
     const value = query || "";
     console.log(query, value);
-    setFilter(`&status=${value}`);
+    setFilter(`&status=${value}`); ///agregar filtro genero
     updatePage(1);
   }
   return (
