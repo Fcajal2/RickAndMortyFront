@@ -1,7 +1,7 @@
-export default function Filter({ setFilter, updatePage }) {
+export default function Gender({ setGender, updatePage }) {
   function handleFilter(query) {
     const value = query || "";
-    setFilter(`&status=${value}`);
+    setGender(`&gender=${value}`);
     updatePage(1);
   }
   return (
@@ -11,13 +11,17 @@ export default function Filter({ setFilter, updatePage }) {
           {" "}
           Show all
         </button>
-        <button class="btn" onClick={() => handleFilter("alive")}>
+        <button class="btn" onClick={() => handleFilter("male")}>
           {" "}
-          Alive
+          Male
         </button>
-        <button class="btn" onClick={() => handleFilter("dead")}>
+        <button class="btn" onClick={() => handleFilter("female")}>
           {" "}
-          Dead
+          Female
+        </button>
+        <button class="btn" onClick={() => handleFilter("genderless")}>
+          {" "}
+          Genderless
         </button>
         <button class="btn" onClick={() => handleFilter("unknown")}>
           {" "}

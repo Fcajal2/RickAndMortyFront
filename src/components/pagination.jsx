@@ -1,37 +1,24 @@
-export default function Pagination({ page, updatePage, info }) {
-  function handlePrev() {
-    if (info.prev) {
-      updatePage(page - 1);
-    }
-  }
+import * as React from "react";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
-  function handleNext() {
-    if (info.next) {
-      updatePage(page + 1);
-    }
-  }
-
-  function handleFirst() {
-    if (page !== 1) {
-      updatePage(1);
-    }
-  }
-
-  function handleLast() {
-    if (page !== info.pages) {
-      updatePage(info.pages);
-    }
-  }
-
+export default function Pagination2({ page, updatePage, info }) {
+  const handleChange = (event, value) => {
+    updatePage(value);
+  };
   return (
     <>
-      <button onClick={handleFirst}>First</button>
-      <button onClick={handlePrev}>{"<<"}</button>
-      <button onClick={handlePrev}>{page-1}</button>
-      <button>{page}</button>
-      <button onClick={handleNext}>{page + 1}</button>
-      <button onClick={handleNext}>{">>"}</button>
-      <button onClick={handleLast}>Last</button>
+      <div>
+        <Stack spacing={2}>
+          <Pagination
+            page={page}
+            onChange={handleChange}
+            count={info.pages}
+            variant="outlined"
+            color="secondary"
+          />
+        </Stack>
+      </div>
     </>
   );
 }

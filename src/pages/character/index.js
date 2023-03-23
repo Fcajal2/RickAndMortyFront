@@ -1,11 +1,12 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Pagination from "@/components/pagination";
-import Search from "@/components/search";
+import Pagination from "../../components/pagination";
+import Search from "../../components/search";
 import styles from "../../styles/Main.module.css";
-import Filter from "@/components/filter";
-import Navbar from "@/components/navbar";
+import Filter from "../../components/filter";
+import Gender from "../../components/gender";
+import Navbar from "../../components/navbar";
 
 const defaultEndpoint = "https://rickandmortyapi.com/api/character/";
 
@@ -28,18 +29,21 @@ export default function Home({ data }) {
   const [page, updatePage] = useState(1);
   const [search, setSearch] = useState();
   const [filter, setFilter] = useState();
+  const [gender, setGender] = useState();
 
   useEffect(() => {
     async function request() {
       const res = await fetch(
-        `${defaultEndpoint}?page=${page}${search ?? ""}${filter ?? ""}`
+        `${defaultEndpoint}?page=${page}${search ?? ""}${filter ?? ""}${
+          gender ?? ""
+        }`
       );
       const nextData = await res.json();
       updateInfo(nextData.info);
       updateResults(nextData.results);
     }
     request();
-  }, [page, search, filter]);
+  }, [page, search, filter, gender]);
 
   return (
     <>
@@ -53,6 +57,7 @@ export default function Home({ data }) {
 
         <Search setSearch={setSearch} updatePage={updatePage} />
         <Filter setFilter={setFilter} updatePage={updatePage} />
+        <Gender setGender={setGender} updatePage={updatePage} />
 
         {results ? (
           <ul className={styles.character_tiles}>

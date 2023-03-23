@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Pagination from "@/components/pagination";
-import Search from "@/components/search";
+import Pagination from "../../components/pagination";
+import Search from "../../components/search";
 import styles from "../../styles/Main.module.css";
-import Navbar from "@/components/navbar";
+import Navbar from "../../components/navbar";
 
 const defaultEndpoint = "https://rickandmortyapi.com/api/episode/";
 

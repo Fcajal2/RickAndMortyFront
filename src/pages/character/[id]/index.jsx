@@ -1,12 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
-import EpisodeList from "@/components/episodes";
+import EpisodeList from "../../../components/episodes";
 import styles from "../../../styles/Main.module.css";
-import Navbar from "@/components/navbar";
+import Navbar from "../../../components/navbar";
 
 const defaultEndpoint = "https://rickandmortyapi.com/api/character/";
 
 export async function getServerSideProps({ query }) {
+  console.log(query);
   const { id } = query;
   //fetching data
   const res = await fetch(`${defaultEndpoint}/${id}`);
@@ -27,7 +28,7 @@ export default function Charater({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-      <Navbar />
+        <Navbar />
         <h1>{data.name}</h1>
 
         <div>
@@ -48,6 +49,9 @@ export default function Charater({ data }) {
               </li>
               <li>
                 <strong>Species:</strong> {data.species}
+              </li>
+              <li>
+                <strong>Type:</strong> {data.type}
               </li>
               <li>
                 <strong>Location: </strong>

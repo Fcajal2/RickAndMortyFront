@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
-import CharacterTile from "@/components/character";
+import CharacterTile from "../../../components/character";
 import styles from "../../../styles/Main.module.css";
-import Navbar from "@/components/navbar";
+import Navbar from "../../../components/navbar";
 
 const defaultEndpoint = "https://rickandmortyapi.com/api/location/";
 
